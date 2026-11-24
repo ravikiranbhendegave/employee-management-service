@@ -3,9 +3,14 @@ spring:
     name: employee-management
 
   datasource:
+    # Use following line to build and run application with Mysql database on localhost
     url: jdbc:mysql://localhost:3306/employee_db
-    username: root
-    password: tiger
+
+    # Use following line to build and run application with Mysql database on docker container
+    # url: jdbc:mysql://host.docker.internal:3306/employee_db
+
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD} # set this in your environment variables
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
