@@ -1,10 +1,10 @@
+
 spring:
   application:
     name: employee-management
 
   datasource:
-    #url: jdbc:mysql://${TIDB_HOST}:4000/${TIDB_DATABASE}?sslMode=VERIFY_IDENTITY
-    url: jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/employee_management?sslMode=VERIFY_IDENTITY
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/employee_management}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,13 +12,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 management:
   endpoints:
@@ -27,4 +28,4 @@ management:
         include: health,info
   endpoint:
     health:
-      show-details: always
+      show-details: never
