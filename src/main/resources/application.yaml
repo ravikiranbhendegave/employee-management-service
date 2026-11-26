@@ -1,6 +1,6 @@
 spring:
   application:
-    name: employee-management
+    name: employee-management-prod
 
   datasource:
     url: "jdbc:mysql://${TIDB_HOST}:${TIDB_PORT:4000}/${TIDB_DATABASE:employee_management}?sslMode=VERIFY_IDENTITY"

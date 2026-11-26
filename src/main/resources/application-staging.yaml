@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: employee-management-staging
+
+  datasource:
+    url: "jdbc:mysql://${TIDB_HOST}:${TIDB_PORT:4000}/${TIDB_DATABASE:employee_management_staging}?sslMode=VERIFY_IDENTITY"
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never

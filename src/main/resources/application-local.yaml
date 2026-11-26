@@ -1,6 +1,6 @@
 spring:
   application:
-    name: employee-management
+    name: employee-management-local
 
   datasource:
     # Use following line to build and run application with Mysql database on localhost
