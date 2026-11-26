@@ -5,6 +5,7 @@ import com.ravicode.employee.service.EmployeeService;
 import com.ravicode.employee.util.LogFactory;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,8 @@ public class EmployeeController {
 
     // 1. Create a new employee
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         LOGGER.info("Received request to create employee: name={}, department={}", employee.getName(), employee.getDepartment());
         Employee saved = employeeService.createEmployee(employee);
@@ -33,6 +36,8 @@ public class EmployeeController {
 
     // 2. Get all employees
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<List<Employee>> getAllEmployees() {
         LOGGER.info("Request received: fetch all employees");
         List<Employee> employees = employeeService.getAllEmployees();
@@ -41,6 +46,8 @@ public class EmployeeController {
 
     // 3. Get employee by id
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) {
         LOGGER.info("Request received: get employee by id={}", id);
         Employee employee = employeeService.getEmployeeById(id);
@@ -49,6 +56,8 @@ public class EmployeeController {
 
     // 4. Filter employees by salary
     @GetMapping("/salary")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<List<Employee>> filterEmployeesBySalary(@RequestParam Double salary) {
         LOGGER.info("Request received: filter employees by salary={}", salary);
         List<Employee> employees = employeeService.filterEmployeesBySalary(salary);
@@ -57,6 +66,8 @@ public class EmployeeController {
 
     // 5. Get employees by department
     @GetMapping("/department/{department}")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<List<Employee>> getEmployeesByDepartment(@PathVariable String department) {
         LOGGER.info("Request received: get employees by department={}", department);
         List<Employee> employees = employeeService.getEmployeesByDepartment(department);
@@ -65,6 +76,8 @@ public class EmployeeController {
 
     // 6. Sort employees by salary
     @GetMapping("/sort/salary")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<List<Employee>> sortEmployeesBySalary() {
         LOGGER.info("Request received: sort employees by salary");
         List<Employee> employees = employeeService.sortEmployeesBySalary();
@@ -73,6 +86,7 @@ public class EmployeeController {
 
     // 7. Get employee names in uppercase
     @GetMapping("/names")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<String>> getEmployeeNamesInUppercase() {
         LOGGER.info("Request received: get employee names uppercase");
         List<String> names = employeeService.getEmployeeNamesInUppercase();
@@ -81,6 +95,8 @@ public class EmployeeController {
 
     // 8. Calculate total salary
     @GetMapping("/salary/total")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<Double> calculateTotalSalary() {
         LOGGER.info("Request received: calculate total salary");
         Double totalSalary = employeeService.calculateTotalSalary();
@@ -89,6 +105,8 @@ public class EmployeeController {
 
     // 9. Find highest-paid employee
     @GetMapping("/highest-salary")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<Employee> findHighestPaidEmployee() {
         LOGGER.info("Request received: find highest paid employee");
         Employee highestPaid = employeeService.findHighestPaidEmployee();
@@ -97,6 +115,8 @@ public class EmployeeController {
 
     // 10. Find top three highest-paid employees
     @GetMapping("/top-three")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<List<Employee>> findTopThreeHighestPaidEmployees() {
         LOGGER.info("Request received: find top three highest paid employees");
         List<Employee> topThree = employeeService.findTopThreeHighestPaidEmployees();
@@ -105,6 +125,7 @@ public class EmployeeController {
 
     // 11. Group employees by department
     @GetMapping("/department-summary")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, List<Employee>>> groupEmployeesByDepartment() {
         LOGGER.info("Request received: group employees by department");
         Map<String, List<Employee>> grouped = employeeService.groupEmployeesByDepartment();
@@ -113,6 +134,7 @@ public class EmployeeController {
 
     // 12. Count employees department-wise
     @GetMapping("/department-count")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Map<String, Long>> getEmployeeCountByDepartment() {
         LOGGER.info("Request received: count employees by department");
         Map<String, Long> countMap = employeeService.countEmployeesByDepartment();
@@ -121,6 +143,7 @@ public class EmployeeController {
 
     // 13. Get all unique skills
     @GetMapping("/skills")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<String>> getAllUniqueSkills() {
         LOGGER.info("Request received: get unique skills");
         List<String> uniqueSkills = employeeService.getAllUniqueSkills();
@@ -129,6 +152,8 @@ public class EmployeeController {
 
     // 14. Find employees having a particular skill
     @GetMapping("/skill/{skill}")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<List<Employee>> findEmployeesBySkill(@PathVariable String skill) {
         LOGGER.info("Request received: find employees by skill={}", skill);
         List<Employee> employeesWithSkill = employeeService.findEmployeesBySkill(skill);
@@ -137,6 +162,8 @@ public class EmployeeController {
 
     // 15. Calculate salary statistics
     @GetMapping("/salary/statistics")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<DoubleSummaryStatistics> getSalaryStatistics() {
         LOGGER.info("Request received: calculate salary statistics");
         DoubleSummaryStatistics statistics = employeeService.getSalaryStatistics();
@@ -145,6 +172,8 @@ public class EmployeeController {
 
     // 16. Delete employee
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+
     public ResponseEntity<Void> deleteEmployee(@PathVariable Integer id) {
         LOGGER.info("Request received: delete employee id={}", id);
         employeeService.deleteEmployee(id);
