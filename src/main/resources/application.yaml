@@ -3,29 +3,28 @@ spring:
     name: employee-management
 
   datasource:
-    url: jdbc:mysql://localhost:3306/employee_db
-    username: root
-    password: tiger
+    url: "jdbc:mysql://${TIDB_HOST}:${TIDB_PORT:4000}/${TIDB_DATABASE:employee_management}?sslMode=VERIFY_IDENTITY"
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info
-
   endpoint:
     health:
-      show-details: always
-
+      show-details: never
