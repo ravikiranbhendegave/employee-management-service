@@ -28,3 +28,11 @@ management:
   endpoint:
     health:
       show-details: never
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+  bootstrap-admin:
+    username: ${ADMIN_USERNAME:}
+    password: ${ADMIN_PASSWORD:}
